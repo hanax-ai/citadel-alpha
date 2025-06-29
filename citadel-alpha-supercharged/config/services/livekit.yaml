@@ -1,0 +1,63 @@
+livekit:
+  # Server Configuration
+  server:
+    url: "${LIVEKIT_URL}"
+    api_key: "${LIVEKIT_API_KEY}"
+    api_secret: "${LIVEKIT_API_SECRET}"
+    
+  # Room Configuration
+  room:
+    prefix: "${LIVEKIT_ROOM_PREFIX}"
+    auto_create: true
+    max_participants: 10
+    empty_timeout: 300
+    
+  # Agent Configuration
+  agents:
+    jarvis:
+      enabled: true
+      instructions: "You are Jarvis, an advanced AI assistant for Citadel Alpha. You can help with business processes, data analysis, and system management through voice commands."
+      voice: "echo"
+      language: "${VOICE_LANGUAGE}"
+      
+    proactor:
+      enabled: "${PROACTOR_ENABLED}"
+      instructions: "You are a Proactor integration agent. You can execute business workflows and processes through voice commands."
+      voice: "alloy"
+      language: "${VOICE_LANGUAGE}"
+      
+    support:
+      enabled: true
+      instructions: "You are a customer support agent. You can help users with questions, troubleshooting, and guidance."
+      voice: "nova"
+      language: "${VOICE_LANGUAGE}"
+
+# Voice Processing Pipeline
+voice_pipeline:
+  # Speech-to-Text
+  stt:
+    provider: "${STT_PROVIDER}"
+    model: "${VOICE_MODEL}"
+    language: "${VOICE_LANGUAGE}"
+    real_time: true
+    
+  # Text-to-Speech
+  tts:
+    provider: "${TTS_PROVIDER}"
+    voice: "echo"
+    speed: 1.0
+    stability: 0.5
+    
+  # Voice Activity Detection
+  vad:
+    provider: "${VAD_PROVIDER}"
+    threshold: 0.5
+    min_speech_duration: 0.25
+    min_silence_duration: 0.5
+    
+  # Audio Processing
+  audio:
+    sample_rate: 16000
+    channels: 1
+    format: "wav"
+    buffer_size: 1024

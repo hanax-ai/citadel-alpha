@@ -1,0 +1,44 @@
+[Unit]
+Description=Citadel Alpha LiveKit Service
+Documentation=https://github.com/citadel-alpha-supercharged/docs
+After=network.target citadel-manager.service
+Requires=citadel-manager.service
+PartOf=citadel-manager.service
+
+[Service]
+Type=simple
+User=agent0
+Group=agent0
+WorkingDirectory=/home/agent0/citadel-alpha-supercharged
+
+# Environment
+Environment=CITADEL_ENV=production
+EnvironmentFile=/home/agent0/citadel-alpha-supercharged/config/environment/.env.production
+
+# Service command
+ExecStart=/home/agent0/citadel-alpha-supercharged/venv/bin/python -m src.services.livekit_service
+ExecStop=/bin/kill -TERM $MAINPID
+
+# Process management
+Restart=always
+RestartSec=15
+TimeoutStartSec=120
+TimeoutStopSec=30
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/agent0/citadel-alpha-supercharged
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=citadel-livekit
+
+[Install]
+WantedBy=citadel-manager.service
